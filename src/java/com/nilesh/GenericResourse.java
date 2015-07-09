@@ -26,8 +26,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import jdk.nashorn.internal.parser.JSONParser;
-
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 /**
  * REST Web Service
  *
@@ -94,6 +94,33 @@ public class GenericResourse {
 
         return products;
     }
+    
+     @POST
+    @Path("/products")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+   
+     public Response createProduct(String str) throws SQLException, ParseException, org.json.simple.parser.ParseException
+    {
+        
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(str);
+  
+ Object id = json.get("id");
+ String productid=id.toString();
+ int Id=Integer.parseInt(productid);
+ Object name = json.get("name");
+ String productname=name.toString();
+         Object description = json.get("description");
+ String productdescription=description.toString();
+         Object quantity = json.get("quantity");
+ String productquantity=quantity.toString();
+ int Qnt=Integer.parseInt(productquantity);
+  Statement smt = conn.createStatement();
+  smt.executeUpdate("INSERT INTO product VALUES ('"+Id+"','"+productname+"','"+productdescription+"','"+Qnt+"' )");
+  return Response.status(Response.Status.CREATED).build();
+    }
+    
     
 
     /**
