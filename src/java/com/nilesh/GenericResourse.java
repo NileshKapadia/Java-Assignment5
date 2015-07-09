@@ -58,7 +58,8 @@ public class GenericResourse {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces("application/xml")
+   @Path("/products")
+    @Produces(MediaType.APPLICATION_JSON)
      public ArrayList<product> getXml() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
 
         //TODO return proper representation object
